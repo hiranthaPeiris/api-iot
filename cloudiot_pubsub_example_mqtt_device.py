@@ -86,10 +86,12 @@ class Device(object):
         otherwise assume that it increased one degree.
         """
         
-        if self.fan_on:
-            self.temperature -= 1
-        else:
-            self.temperature += 1
+        # if self.fan_on:
+        #     self.temperature -= 1
+        # else:
+        #     self.temperature += 1
+
+        self.temperature+=1
 
     def wait_for_connection(self, timeout):
         """Wait for the device to become connected."""
@@ -137,14 +139,14 @@ class Device(object):
         # The config is passed in the payload of the message. In this example,
         # the server sends a serialized JSON string.
         data = json.loads(payload)
-        if data['fan_on'] != self.fan_on:
-            # If changing the state of the fan, print a message and
-            # update the internal state.
-            self.fan_on = data['fan_on']
-            if self.fan_on:
-                print('Fan turned on.')
-            else:
-                print('Fan turned off.')
+        # if data['fan_on'] != self.fan_on:
+        #     # If changing the state of the fan, print a message and
+        #     # update the internal state.
+        #     self.fan_on = data['fan_on']
+        #     if self.fan_on:
+        #         print('Fan turned on.')
+        #     else:
+        #         print('Fan turned off.')
 
 
 def parse_command_line_args():
