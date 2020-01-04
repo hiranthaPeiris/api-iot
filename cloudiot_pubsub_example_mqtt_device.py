@@ -11,16 +11,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 r"""Sample device that consumes configuration from Google Cloud IoT.
-This example represents a simple device with a temperature sensor and a fan
-(simulated with software). When the device's fan is turned on, its temperature
+This example represents a simple device with a meter_index sensor and a fan
+(simulated with software). When the device's fan is turned on, its meter_index
 decreases by one degree per second, and when the device's fan is turned off,
-its temperature increases by one degree per second.
+its meter_index increases by one degree per second.
 
-Every second, the device publishes its temperature reading to Google Cloud IoT
-Core. The server meanwhile receives these temperature readings, and decides
+Every second, the device publishes its meter_index reading to Google Cloud IoT
+Core. The server meanwhile receives these meter_index readings, and decides
 whether to re-configure the device to turn its fan on or off. The server will
-instruct the device to turn the fan on when the device's temperature exceeds 10
-degrees, and to turn it off when the device's temperature is less than 0
+instruct the device to turn the fan on when the device's meter_index exceeds 10
+degrees, and to turn it off when the device's meter_index is less than 0
 degrees. In a real system, one could use the cloud to compute the optimal
 thresholds for turning on and off the fan, but for illustrative purposes we use
 a simple threshold model.
@@ -75,23 +75,23 @@ class Device(object):
     """Represents the state of a single device."""
 
     def __init__(self):
-        self.temperature = 0
+        self.meter_index = 0
         self.meter_limit = 0
         self.fan_on = False
         self.connected = False
 
     def update_sensor_data(self):
         """Pretend to read the device's sensor data.
-        If the fan is on, assume the temperature decreased one degree,
+        If the fan is on, assume the meter_index decreased one degree,
         otherwise assume that it increased one degree.
         """
         
         # if self.fan_on:
-        #     self.temperature -= 1
+        #     self.meter_index -= 1
         # else:
-        #     self.temperature += 1
+        #     self.meter_index += 1
 
-        self.temperature+=1
+        self.meter_index+=1
 
     def wait_for_connection(self, timeout):
         """Wait for the device to become connected."""
@@ -228,7 +228,7 @@ def main():
     client.loop_start()
 
     # This is the topic that the device will publish telemetry events
-    # (temperature data) to.
+    # (meter_index data) to.
     mqtt_telemetry_topic = '/devices/{}/events'.format(args.device_id)
 
     # This is the topic that the device will receive configuration updates on.
@@ -240,19 +240,19 @@ def main():
     # Subscribe to the config topic.
     client.subscribe(mqtt_config_topic, qos=1)
 
-    # Update and publish temperature readings at a rate of one per second.
+    # Update and publish meter_index readings at a rate of one per second.
     for _ in range(args.num_messages):
         # In an actual device, this would read the device's sensors. Here,
-        # you update the temperature based on whether the fan is on.
+        # you update the meter_index based on whether the fan is on.
         device.update_sensor_data()
 
-        # Report the device's temperature to the server by serializing it
+        # Report the device's meter_index to the server by serializing it
         # as a JSON string.
-        payload = json.dumps({'meter_read': device.temperature})
+        payload = json.dumps({'meter_read': device.meter_index})
         print('Publishing payload', payload)
         client.publish(mqtt_telemetry_topic, payload, qos=1)
         # Send events every second.
-        time.sleep(1)
+        time.sleep(10)
 
     client.disconnect()
     client.loop_stop()

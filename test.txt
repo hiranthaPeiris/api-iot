@@ -23,7 +23,7 @@ def hello_pubsub(event, context):
         ),
     )
     
-    stmt = sqlalchemy.text('INSERT INTO logs(wifistr) VALUES (:data)')
+    stmt = sqlalchemy.text('INSERT INTO log(meter_reding) VALUES (:data)')
     try:
         with db.connect() as conn:
             conn.execute(stmt, data=pubsub_message)
