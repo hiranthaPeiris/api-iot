@@ -75,7 +75,7 @@ class Device(object):
     """Represents the state of a single device."""
 
     def __init__(self):
-        self.meter_index = 0
+        self.meter_index = 312
         self.meter_limit = 0
         self.fan_on = False
         self.connected = False
