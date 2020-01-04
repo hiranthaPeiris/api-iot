@@ -85,13 +85,13 @@ class Server(object):
                               data):
         """Push the data to the given device as configuration."""
         config_data = None
-        print('The device ({}) has a temperature '
-              'of: {}'.format(device_id, data['temperature']))
-        if data['temperature'] < 0:
+        print('The device ({}) meter reading is '
+              'of: {}'.format(device_id, data['meter_read']))
+        if data['meter_read'] < 0:
             # Turn off the fan.
             config_data = {'fan_on': False}
             print('Setting fan state for device', device_id, 'to off.')
-        elif data['temperature'] > 10:
+        elif data['meter_read'] > 10:
             # Turn on the fan
             config_data = {'fan_on': True}
             print('Setting fan state for device', device_id, 'to on.')
