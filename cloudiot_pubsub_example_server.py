@@ -90,11 +90,11 @@ class Server(object):
         if data['meter_read'] < 0:
             # Turn off the fan.
             config_data = {'fan_on': False}
-            print('Setting fan state for device', device_id, 'to off.')
+            #print('Setting fan state for device', device_id, 'to off.')
         elif data['meter_read'] > 10:
             # Turn on the fan
             config_data = {'fan_on': True}
-            print('Setting fan state for device', device_id, 'to on.')
+            #print('Setting fan state for device', device_id, 'to on.')
         else:
             # Temperature is OK, don't need to push a new config.
             return

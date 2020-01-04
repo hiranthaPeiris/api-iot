@@ -127,8 +127,8 @@ class Device(object):
     def on_message(self, unused_client, unused_userdata, message):
         """Callback when the device receives a message on a subscription."""
         payload = message.payload.decode('utf-8')
-        print('Received message \'{}\' on topic \'{}\' with Qos {}'.format(
-            payload, message.topic, str(message.qos)))
+        #print('Received message \'{}\' on topic \'{}\' with Qos {}'.format(
+            #payload, message.topic, str(message.qos)))
 
         # The device will receive its latest config when it subscribes to the
         # config topic. If there is no configuration for the device, the device
@@ -252,7 +252,7 @@ def main():
         print('Publishing payload', payload)
         client.publish(mqtt_telemetry_topic, payload, qos=1)
         # Send events every second.
-        time.sleep(10)
+        time.sleep(2)
 
     client.disconnect()
     client.loop_stop()
