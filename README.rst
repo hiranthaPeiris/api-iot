@@ -16,11 +16,7 @@ credentials for applications.
 Install Dependencies
 ++++++++++++++++++++
 
-#. Clone python-docs-samples and change directory to the sample directory you want to use.
-
-    .. code-block:: bash
-
-        $ git clone https://github.com/GoogleCloudPlatform/python-docs-samples.git
+#. Cloneand change directory to the sample directory you want to use.
 
 #. Install `pip`_ and `virtualenv`_ if you do not already have them. You may want to refer to the `Python Development Environment Setup Guide`_ for Google Cloud Platform for instructions.
 
